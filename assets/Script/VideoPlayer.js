@@ -31,23 +31,23 @@ cc.Class({
     },
 
     start() {
-        this.VideoPlayer._impl._video.controls = true; // 顯示控制面板
-        this.VideoPlayer._impl._video.crossorigin = "anonymous";
-        this.VideoPlayer._impl._video.poster = "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png"
-        this.hls = createHlsVideo({
-            hls: Hls,
-            videoDOM: this.VideoPlayer._impl._video,
-            volume: 1,
-            videoURL: {
-                '1080': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
-                '720': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
-                origin: 'https://newsvodmobilewsa.erg.cdn.ssdm.sohu.com/cdn/live/Phoenixtv.m3u8'
-            },
-            // posterURL: "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png",
-            timeUpdate: this.timeUpdate,
-        });
+        // this.VideoPlayer._impl._video.controls = true; // 顯示控制面板
+        // this.VideoPlayer._impl._video.crossorigin = "anonymous";
+        // this.VideoPlayer._impl._video.poster = "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png"
+        // this.VideoPlayer._impl._video.controlslist = "nofullscreen nodownload noremoteplayback noplaybackrate";
+        // this.hls = createHlsVideo({
+        //     hls: Hls,
+        //     videoDOM: this.VideoPlayer._impl._video,
+        //     volume: 1,
+        //     videoURL: {
+        //         '1080': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
+        //         '720': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
+        //         origin: 'https://newsvodmobilewsa.erg.cdn.ssdm.sohu.com/cdn/live/Phoenixtv.m3u8'
+        //     },
+        //     timeUpdate: this.timeUpdate,
+        // });
 
-        window.Hls = this.hls;
+        // window.Hls = this.hls;
     },
 
     // called every frame
@@ -111,5 +111,34 @@ cc.Class({
         //     sprite.spriteFrame = this.pauseIcon;
         // }
     },
+
+    createHls(options) {
+        this.VideoPlayer._impl._video.controls = true; // 顯示控制面板
+        this.VideoPlayer._impl._video.crossorigin = "anonymous";
+        // this.VideoPlayer._impl._video.poster = "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png"
+        this.VideoPlayer._impl._video.poster = options.posterURL;
+        this.VideoPlayer._impl._video.disablePictureInPicture = true;
+        this.VideoPlayer._impl._video.controlsList = "nofullscreen nodownload noremoteplayback noplaybackrate";
+        this.VideoPlayer._impl._video.addEventListener("click", this._mouseHandler, false);
+        this.VideoPlayer._impl._video.addEventListener("contextmenu", this._mouseHandler, false);
+        this.hls = createHlsVideo({
+            hls: Hls,
+            videoDOM: this.VideoPlayer._impl._video,
+            volume: 1,
+            // videoURL: {
+            //     '1080': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
+            //     '720': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
+            //     origin: 'https://newsvodmobilewsa.erg.cdn.ssdm.sohu.com/cdn/live/Phoenixtv.m3u8'
+            // },
+            videoURL: options.videoURLs,
+            timeUpdate: this.timeUpdate,
+        });
+
+        window.Hls = this.hls;
+    },
+
+    _mouseHandler(event) {
+        event.preventDefault();
+    }
 
 });

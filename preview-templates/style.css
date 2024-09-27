@@ -96,3 +96,21 @@ canvas {
 
     animation: animate-stripes 1s linear infinite;
 }
+
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-time-remaining-display,
+/* video::-webkit-media-controls-volume-slider, */
+video::-webkit-media-controls-play-button {
+    display: none;
+}
+
+video::-webkit-media-controls-mute-button {
+    position: absolute;
+    left: 0;
+}
+
+/* Firefox */
+video::-moz-progress-bar {
+    display: none;
+}

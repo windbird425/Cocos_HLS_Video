@@ -11,7 +11,7 @@
         }
     };
 
-    function onload () {
+    function onload() {
 
         // socket
         // =======================
@@ -22,8 +22,8 @@
             window.location.reload();
         });
         socket.on('browser:confirm-reload', function () {
-            var r = confirm( 'Reload?' );
-            if ( r ) {
+            var r = confirm('Reload?');
+            if (r) {
                 window.location.reload();
             }
         });
@@ -50,7 +50,7 @@
             // init assets
             engineInited = true;
 
-            cc.assetManager.loadAny({url: 'preview-scene.json', __isNative__: false }, null, function (finish, totalCount) {
+            cc.assetManager.loadAny({ url: 'preview-scene.json', __isNative__: false }, null, function (finish, totalCount) {
                 var percent = 100 * finish / totalCount;
                 if (progressBar) {
                     progressBar.style.width = percent.toFixed(2) + '%';
@@ -90,10 +90,10 @@
 
         let { RESOURCES, INTERNAL, MAIN } = cc.AssetManager.BuiltinBundleName;
         var bundleRoot = [INTERNAL];
-		_CCSettings.hasResourcesBundle && bundleRoot.push(RESOURCES);
+        _CCSettings.hasResourcesBundle && bundleRoot.push(RESOURCES);
 
         var count = 0;
-        function cb (err) {
+        function cb(err) {
             if (err) return console.error(err);
             count++;
             if (count === bundleRoot.length + 1) {
