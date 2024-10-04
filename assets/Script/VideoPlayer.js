@@ -1,6 +1,7 @@
 // import * as Hls from 'hls.js'
 import Hls from 'hls.js'
 import createHlsVideo from 'cocos-hls-player'
+const bufferTime = 3; // 預設直播的緩衝秒數
 
 cc.Class({
     extends: cc.Component,
@@ -31,35 +32,27 @@ cc.Class({
     },
 
     start() {
-        // this.VideoPlayer._impl._video.controls = true; // 顯示控制面板
-        // this.VideoPlayer._impl._video.crossorigin = "anonymous";
-        // this.VideoPlayer._impl._video.poster = "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png"
-        // this.VideoPlayer._impl._video.controlslist = "nofullscreen nodownload noremoteplayback noplaybackrate";
-        // this.hls = createHlsVideo({
-        //     hls: Hls,
-        //     videoDOM: this.VideoPlayer._impl._video,
-        //     volume: 1,
-        //     videoURL: {
-        //         '1080': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
-        //         '720': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
-        //         origin: 'https://newsvodmobilewsa.erg.cdn.ssdm.sohu.com/cdn/live/Phoenixtv.m3u8'
-        //     },
-        //     timeUpdate: this.timeUpdate,
-        // });
-
-        // window.Hls = this.hls;
     },
 
     // called every frame
 
     update: function (dt) {
-
         // 每幀判斷播放按鈕狀態
         if (this.hls.video != null) {
             if (this.hls.video.paused) {
                 this.playButton.node.getChildByName("Background").getComponent(cc.Sprite).spriteFrame = this.playIcon;
             } else {
                 this.playButton.node.getChildByName("Background").getComponent(cc.Sprite).spriteFrame = this.pauseIcon;
+            }
+        }
+
+        if (this.liveBadge != null && this.liveBadge != undefined) {
+            if ((this.hls.video.duration - this.hls.video.currentTime) > (bufferTime * 2)) {
+                this.liveBadge.style["cursor"] = "pointer";
+                this.liveBadge.style["background-color"] = "#757575";
+            } else {
+                this.liveBadge.style["cursor"] = "";
+                this.liveBadge.style["background-color"] = "";
             }
         }
     },
@@ -79,9 +72,9 @@ cc.Class({
         // console.log(currentTime, duration, percentage)
     },
 
-    // 从10秒开始播放
-    setCurrentTime() {
-        this.hls.seek(5)
+    // 從第幾秒開始
+    setCurrentTime(second) {
+        this.hls.seek(second);
     },
 
     // 播放
@@ -115,7 +108,7 @@ cc.Class({
     createHls(options) {
         this.VideoPlayer._impl._video.controls = true; // 顯示控制面板
         this.VideoPlayer._impl._video.crossorigin = "anonymous";
-        // this.VideoPlayer._impl._video.poster = "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png"
+        // this.VideoPlayer._impl._video.poster = "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png" //影片預覽圖範例
         this.VideoPlayer._impl._video.poster = options.posterURL;
         this.VideoPlayer._impl._video.disablePictureInPicture = true;
         this.VideoPlayer._impl._video.controlsList = "nofullscreen nodownload noremoteplayback noplaybackrate";
@@ -133,8 +126,30 @@ cc.Class({
             videoURL: options.videoURLs,
             timeUpdate: this.timeUpdate,
         });
+        // 直播中的圖示
+        let liveBadge = this._createDOM("button", "live-badge", "", this.VideoPlayer._impl._videoContainer);
+        liveBadge.textContent = "LIVE";
+        liveBadge.addEventListener("click", function () {
+            // this.hls.seek(this.hls.video.duration - bufferTime);
+            this.setCurrentTime(this.hls.video.duration - bufferTime);
+            this.playVideo();
+        }.bind(this), false)
+        this.liveBadge = liveBadge;
+        // 提醒直播延遲文字
+        let pinnedText = this._createDOM("div", "video-pinned-text", "", this.VideoPlayer._impl._videoContainer);
+        pinnedText.textContent = "Streaming delay 30-60 second";
 
         window.Hls = this.hls;
+        window.VideoPlayer = this.VideoPlayer;
+    },
+
+    _createDOM(tagName, className, id, parentNode) {
+        const DOM = document.createElement(tagName);
+        DOM.classList.add(className);
+        DOM.id = id;
+        parentNode.appendChild(DOM);
+
+        return DOM;
     },
 
     _mouseHandler(event) {

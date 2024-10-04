@@ -97,6 +97,42 @@ canvas {
     animation: animate-stripes 1s linear infinite;
 }
 
+.live-container {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 20px); /* 讓進度條不超出 video 寬度 */
+}
+
+.live-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: red;
+    padding: 1px 1px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    cursor: none;
+    font-size: 12px;
+}
+
+.video-pinned-text {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    background-color: #938C9880;
+    padding: 1px 1px; 
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    font-size: 12px;
+}
+
 video::-webkit-media-controls-timeline,
 video::-webkit-media-controls-current-time-display,
 video::-webkit-media-controls-time-remaining-display,
@@ -105,10 +141,10 @@ video::-webkit-media-controls-play-button {
     display: none;
 }
 
-video::-webkit-media-controls-mute-button {
+/* video::-webkit-media-controls-mute-button {
     position: absolute;
     left: 0;
-}
+} */
 
 /* Firefox */
 video::-moz-progress-bar {
