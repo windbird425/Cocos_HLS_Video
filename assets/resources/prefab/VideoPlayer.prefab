@@ -415,15 +415,6 @@
     "vidioNode": {
       "__id__": 1
     },
-    "playIcon": {
-      "__uuid__": "57cf5333-bb8c-46a2-b892-4de2b32415b8"
-    },
-    "pauseIcon": {
-      "__uuid__": "95518903-d129-4160-8f57-63ec42904739"
-    },
-    "playButton": {
-      "__id__": 7
-    },
     "_id": ""
   },
   {

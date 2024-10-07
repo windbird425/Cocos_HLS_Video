@@ -1,7 +1,8 @@
 // import * as Hls from 'hls.js'
 import Hls from 'hls.js'
-import createHlsVideo from 'cocos-hls-player'
-const bufferTime = 3; // 預設直播的緩衝秒數
+// import createHlsVideo from 'cocos-hls-player'
+const hlsPlayer = require("cocos-hls-player");
+const bufferTime = 15; // 預設直播的緩衝秒數
 
 cc.Class({
     extends: cc.Component,
@@ -10,18 +11,6 @@ cc.Class({
         vidioNode: {
             default: null,
             type: cc.Node
-        },
-        playIcon: {
-            default: null,
-            type: cc.SpriteFrame
-        },
-        pauseIcon: {
-            default: null,
-            type: cc.SpriteFrame
-        },
-        playButton: {
-            default: null,
-            type: cc.Button
         }
     },
 
@@ -37,15 +26,6 @@ cc.Class({
     // called every frame
 
     update: function (dt) {
-        // 每幀判斷播放按鈕狀態
-        if (this.hls.video != null) {
-            if (this.hls.video.paused) {
-                this.playButton.node.getChildByName("Background").getComponent(cc.Sprite).spriteFrame = this.playIcon;
-            } else {
-                this.playButton.node.getChildByName("Background").getComponent(cc.Sprite).spriteFrame = this.pauseIcon;
-            }
-        }
-
         if (this.liveBadge != null && this.liveBadge != undefined) {
             if ((this.hls.video.duration - this.hls.video.currentTime) > (bufferTime * 2)) {
                 this.liveBadge.style["cursor"] = "pointer";
@@ -98,11 +78,6 @@ cc.Class({
         // let sprite = btnNode.getChildByName("Background").getComponent(cc.Sprite);
 
         this.hls.toggle();
-        // if (this.hls.video.paused) {
-        //     sprite.spriteFrame = this.playIcon;
-        // } else {
-        //     sprite.spriteFrame = this.pauseIcon;
-        // }
     },
 
     createHls(options) {
@@ -114,7 +89,7 @@ cc.Class({
         this.VideoPlayer._impl._video.controlsList = "nofullscreen nodownload noremoteplayback noplaybackrate";
         this.VideoPlayer._impl._video.addEventListener("click", this._mouseHandler, false);
         this.VideoPlayer._impl._video.addEventListener("contextmenu", this._mouseHandler, false);
-        this.hls = createHlsVideo({
+        this.hls = hlsPlayer.createHlsVideo({
             hls: Hls,
             videoDOM: this.VideoPlayer._impl._video,
             volume: 1,

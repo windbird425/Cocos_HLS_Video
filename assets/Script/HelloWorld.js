@@ -33,9 +33,9 @@ cc.Class({
         // Al Jazeera 直播源 https://live-hls-web-aje.getaj.net/AJE/01.m3u8
         let videoData = {
             videoURLs: {
-                '1080': 'https://stream1.aws-live-streaming.com:446/live/ch99/playlist.m3u8',
-                '720': 'https://stream1.aws-live-streaming.com:446/live/ch99/playlist.m3u8',
-                origin: 'https://stream1.aws-live-streaming.com:446/live/ch99/playlist.m3u8'
+                '1080': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
+                '720': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
+                origin: 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8'
             },
             posterURL: "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png"
         }
