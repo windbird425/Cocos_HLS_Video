@@ -37,7 +37,7 @@ cc.Class({
                 '720': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
                 origin: 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8'
             },
-            posterURL: "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png"
+            posterURL: "img/poster.jpg"
         }
 
         cc.resources.load(resName, function (err, prefab) {

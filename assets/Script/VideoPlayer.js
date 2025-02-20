@@ -83,24 +83,26 @@ cc.Class({
     createHls(options) {
         this.VideoPlayer._impl._video.controls = true; // 顯示控制面板
         this.VideoPlayer._impl._video.crossorigin = "anonymous";
-        // this.VideoPlayer._impl._video.poster = "https://dev-api.iplaystar.net/game/HostImages/0/PSC-ON-00016/loading_ad_1.png" //影片預覽圖範例
+        // this.VideoPlayer._impl._video.poster = "img/poster.jpg" //影片預覽圖範例
         this.VideoPlayer._impl._video.poster = options.posterURL;
         this.VideoPlayer._impl._video.disablePictureInPicture = true;
-        this.VideoPlayer._impl._video.controlsList = "nofullscreen nodownload noremoteplayback noplaybackrate";
         this.VideoPlayer._impl._video.addEventListener("click", this._mouseHandler, false);
-        this.VideoPlayer._impl._video.addEventListener("contextmenu", this._mouseHandler, false);
-        this.hls = hlsPlayer.createHlsVideo({
-            hls: Hls,
-            videoDOM: this.VideoPlayer._impl._video,
-            volume: 1,
-            // videoURL: {
-            //     '1080': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
-            //     '720': 'https://live-hls-web-aje.getaj.net/AJE/01.m3u8',
-            //     origin: 'https://newsvodmobilewsa.erg.cdn.ssdm.sohu.com/cdn/live/Phoenixtv.m3u8'
-            // },
-            videoURL: options.videoURLs,
-            timeUpdate: this.timeUpdate,
-        });
+
+        if (this.VideoPlayer._impl._video.canPlayType("application/vnd.apple.mpegurl")) {
+            this.VideoPlayer._impl._video.src = options.videoURLs.origin;
+        } else {
+            this.hls = hlsPlayer.createHlsVideo({
+                hls: Hls,
+                videoDOM: this.VideoPlayer._impl._video,
+                volume: 1,
+                videoURL: options.videoURLs,
+                timeUpdate: this.timeUpdate,
+            });
+        }
+
+
+        this.VideoPlayer._impl._video.autoplay = true;
+        this.VideoPlayer._impl._video.muted = false;
         // 直播中的圖示
         let liveBadge = this._createDOM("button", "live-badge", "", this.VideoPlayer._impl._videoContainer);
         liveBadge.textContent = "LIVE";
