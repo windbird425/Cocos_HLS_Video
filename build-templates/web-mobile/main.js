@@ -108,6 +108,7 @@ window.boot = function () {
         count++;
         if (count === bundleRoot.length + 1) {
             cc.assetManager.loadBundle(MAIN, function (err) {
+                cc.macro.ENABLE_TRANSPARENT_CANVAS = true; // 讓Canvas畫布可以有透明的效果
                 if (!err) cc.game.run(option, onStart);
             });
         }

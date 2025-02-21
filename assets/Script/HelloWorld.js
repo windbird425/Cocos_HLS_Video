@@ -5,10 +5,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        vidioNode: {
-            default: null,
-            type: cc.Node
-        },
         playIcon: {
             default: null,
             type: cc.SpriteFrame
@@ -23,9 +19,6 @@ cc.Class({
     onLoad: function () {
         // cc.Camera.main.backgroundColor = cc.color(0, 0, 0, 0);
         this.hls = null;
-        this.VideoPlayer = this.vidioNode.getComponent(cc.VideoPlayer);
-        // cc.log(this.VideoPlayer);
-        // this.VideoPlayer._impl._video
     },
 
     start() {

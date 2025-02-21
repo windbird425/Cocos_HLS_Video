@@ -105,8 +105,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1360,
-      "height": 768
+      "width": 720,
+      "height": 1280
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -117,8 +117,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        680,
-        384,
+        360,
+        640,
         0,
         0,
         0,
@@ -168,8 +168,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1360,
-      "height": 768
+      "width": 720,
+      "height": 1280
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -270,8 +270,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1360,
-      "height": 768
+      "width": 720,
+      "height": 1280
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -829,8 +829,8 @@
     "_enabled": true,
     "_designResolution": {
       "__type__": "cc.Size",
-      "width": 1360,
-      "height": 768
+      "width": 720,
+      "height": 1280
     },
     "_fitWidth": false,
     "_fitHeight": true,
@@ -844,9 +844,7 @@
       "__id__": 2
     },
     "_enabled": true,
-    "vidioNode": {
-      "__id__": 10
-    },
+    "vidioNode": null,
     "playIcon": null,
     "pauseIcon": null,
     "_id": "dcGJ+cSA5D7qNtScKfLjJJ"

@@ -2,7 +2,8 @@
   "engine": "cocos2d-html5",
   "packages": "packages",
   "version": "2.4.8",
-  "name": "WebRTC",
+  "name": "Cocos_HLS_Video",
   "id": "ea54fde5-8311-4397-9173-89780b4855c5",
-  "isNew": false
+  "isNew": false,
+  "description": "Hello world new project template."
 }
