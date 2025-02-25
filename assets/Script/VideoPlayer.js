@@ -11,7 +11,11 @@ cc.Class({
         vidioNode: {
             default: null,
             type: cc.Node
-        }
+        },
+        liveBadgeNode: {
+            default: null,
+            type: cc.Node
+        },
     },
 
     onLoad: function () {
@@ -26,13 +30,23 @@ cc.Class({
     // called every frame
 
     update: function (dt) {
-        if (this.liveBadge != null && this.liveBadge != undefined) {
+        // DOM
+        // if (this.liveBadge != null && this.liveBadge != undefined) {
+        //     if ((this.hls.video.duration - this.hls.video.currentTime) > (bufferTime * 2)) {
+        //         this.liveBadge.style["cursor"] = "pointer";
+        //         this.liveBadge.style["background-color"] = "#757575";
+        //     } else {
+        //         this.liveBadge.style["cursor"] = "";
+        //         this.liveBadge.style["background-color"] = "";
+        //     }
+        // }
+
+        // 遊戲的node
+        if (this.liveBadgeNode != null && this.liveBadgeNode != undefined) {
             if ((this.hls.video.duration - this.hls.video.currentTime) > (bufferTime * 2)) {
-                this.liveBadge.style["cursor"] = "pointer";
-                this.liveBadge.style["background-color"] = "#757575";
+
             } else {
-                this.liveBadge.style["cursor"] = "";
-                this.liveBadge.style["background-color"] = "";
+
             }
         }
     },
@@ -104,14 +118,15 @@ cc.Class({
         this.VideoPlayer._impl._video.autoplay = true;
         this.VideoPlayer._impl._video.muted = false;
         // 直播中的圖示
-        let liveBadge = this._createDOM("button", "live-badge", "", this.VideoPlayer._impl._videoContainer);
-        liveBadge.textContent = "LIVE";
-        liveBadge.addEventListener("click", function () {
-            // this.hls.seek(this.hls.video.duration - bufferTime);
-            this.setCurrentTime(this.hls.video.duration - bufferTime);
-            this.playVideo();
-        }.bind(this), false)
-        this.liveBadge = liveBadge;
+        // let liveBadge = this._createDOM("button", "live-badge", "", this.VideoPlayer._impl._videoContainer);
+        // liveBadge.textContent = "LIVE";
+        // liveBadge.addEventListener("click", function () {
+        //     // this.hls.seek(this.hls.video.duration - bufferTime);
+        //     this.setCurrentTime(this.hls.video.duration - bufferTime);
+        //     this.playVideo();
+        // }.bind(this), false)
+        // this.liveBadge = liveBadge;
+        
         // 提醒直播延遲文字
         let pinnedText = this._createDOM("div", "video-pinned-text", "", this.VideoPlayer._impl._videoContainer);
         pinnedText.textContent = "Streaming delay 30-60 second";

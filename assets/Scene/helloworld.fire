@@ -250,7 +250,7 @@
       "__id__": 2
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 6
@@ -844,7 +844,6 @@
       "__id__": 2
     },
     "_enabled": true,
-    "vidioNode": null,
     "playIcon": null,
     "pauseIcon": null,
     "_id": "dcGJ+cSA5D7qNtScKfLjJJ"
