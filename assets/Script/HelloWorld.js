@@ -79,7 +79,7 @@ cc.Class({
 
     setVideoSpriteGray(event, customEventData) {
         cc.log(event.progress);
-        this.spriteNodeMaterial.setProperty("grayEffect", event.progress);
+        this.spriteNodeMaterial.setProperty("grayEffect", event.progress); 
     },
 
 });
