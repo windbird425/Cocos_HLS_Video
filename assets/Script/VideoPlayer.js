@@ -11,11 +11,7 @@ cc.Class({
         vidioNode: {
             default: null,
             type: cc.Node
-        },
-        liveBadgeNode: {
-            default: null,
-            type: cc.Node
-        },
+        }
     },
 
     onLoad: function () {
@@ -30,23 +26,13 @@ cc.Class({
     // called every frame
 
     update: function (dt) {
-        // DOM
-        // if (this.liveBadge != null && this.liveBadge != undefined) {
-        //     if ((this.hls.video.duration - this.hls.video.currentTime) > (bufferTime * 2)) {
-        //         this.liveBadge.style["cursor"] = "pointer";
-        //         this.liveBadge.style["background-color"] = "#757575";
-        //     } else {
-        //         this.liveBadge.style["cursor"] = "";
-        //         this.liveBadge.style["background-color"] = "";
-        //     }
-        // }
-
-        // 遊戲的node
-        if (this.liveBadgeNode != null && this.liveBadgeNode != undefined) {
+        if (this.liveBadge != null && this.liveBadge != undefined) {
             if ((this.hls.video.duration - this.hls.video.currentTime) > (bufferTime * 2)) {
-
+                this.liveBadge.style["cursor"] = "pointer";
+                this.liveBadge.style["background-color"] = "#757575";
             } else {
-
+                this.liveBadge.style["cursor"] = "";
+                this.liveBadge.style["background-color"] = "";
             }
         }
     },
@@ -126,13 +112,12 @@ cc.Class({
         //     this.playVideo();
         // }.bind(this), false)
         // this.liveBadge = liveBadge;
-        
-        // 提醒直播延遲文字
-        let pinnedText = this._createDOM("div", "video-pinned-text", "", this.VideoPlayer._impl._videoContainer);
-        pinnedText.textContent = "Streaming delay 30-60 second";
+        // // 提醒直播延遲文字
+        // let pinnedText = this._createDOM("div", "video-pinned-text", "", this.VideoPlayer._impl._videoContainer);
+        // pinnedText.textContent = "Streaming delay 30-60 second";
 
-        window.Hls = this.hls;
-        window.VideoPlayer = this.VideoPlayer;
+        // window.Hls = this.hls;
+        // window.VideoPlayer = this.VideoPlayer;
     },
 
     _createDOM(tagName, className, id, parentNode) {
