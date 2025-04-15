@@ -1,19 +1,29 @@
 {
   "__type__": "cc.Material",
-  "_name": "gray",
+  "_name": "",
   "_objFlags": 0,
+  "__editorExtras__": {},
   "_native": "",
   "_effectAsset": {
-    "__uuid__": "db665117-223e-4089-b140-f04976b6886b"
+    "__uuid__": "b6b1ea0d-db66-4740-b2d3-934aac3fefbb",
+    "__expectedType__": "cc.EffectAsset"
   },
-  "_techniqueIndex": 0,
-  "_techniqueData": {
-    "0": {
-      "defines": {
-        "USE_TEXTURE": false,
-        "USE_BGRA": false,
-        "USE_ALPHA_TEST": false
+  "_techIdx": 0,
+  "_defines": [
+    {}
+  ],
+  "_states": [
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
       }
     }
-  }
+  ],
+  "_props": [
+    {}
+  ]
 }

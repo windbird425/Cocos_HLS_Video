@@ -1,9 +1,13 @@
 {
-  "ver": "1.3.2",
-  "uuid": "e58d54fe-6c7b-4fa8-9c3d-f1c8f26b3302",
+  "ver": "1.1.50",
   "importer": "prefab",
-  "optimizationPolicy": "AUTO",
-  "asyncLoadAssets": false,
-  "readonly": false,
-  "subMetas": {}
+  "imported": true,
+  "uuid": "e58d54fe-6c7b-4fa8-9c3d-f1c8f26b3302",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {},
+  "userData": {
+    "syncNodeName": "VideoPlayer"
+  }
 }
