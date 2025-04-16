@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, log, resources, instantiate, Sprite } from 'cc';
+import { _decorator, Component, Node, log, resources, instantiate, Sprite, Texture2D, SpriteFrame, ImageAsset } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('HelloWorld')
@@ -9,11 +9,15 @@ export class HelloWorld extends Component {
     private videoNode: Node | null = null;
     private spriteNodeMaterial: any;
     private videoDOM: any;
+    private canvas: any;
+    private ctx: any;
+    private imageAsset: ImageAsset;
+    private texture: Texture2D;
+    private spriteFrame: SpriteFrame;
     
-
     onLoad () {
         this.videoNode = null; 
-        // this.spriteNodeMaterial = this.spriteNode.getComponent(Sprite).getMaterial(0); 
+        this.spriteNodeMaterial = this.spriteNode.getComponent(Sprite).getSharedMaterial(0); 
     }
 
     start () {
@@ -31,31 +35,73 @@ export class HelloWorld extends Component {
             this.node.addChild(videoPlayerNode); 
             videoPlayerNode.setPosition(-410, 30); 
             videoPlayerNode.getComponent("VideoPlayerEx").createHls(videoData); 
-            // this.videoNode = videoPlayerNode; 
+            this.videoNode = videoPlayerNode; 
             // this.videoNode.active = false; 
-            // this._initVideo(); 
+            this._initVideo(); 
         }.bind(this)); 
     }
 
-    _initVideo () {
-        // this.videoDOM = this.videoNode.getComponent("VideoPlayerEx").VideoPlayer._impl._video; 
-        // this.canvas = document.createElement("canvas"); 
-        // this.ctx = this.canvas.getContext("2d", { willReadFrequently: true }); 
-        // this.canvas.width = 428;  // 設定解析度 
-        // this.canvas.height = 240; 
-        // this.texture = new cc.Texture2D(); 
-        // this.spriteFrame = new cc.SpriteFrame(this.texture); 
-        // this.spriteNode.getComponent(cc.Sprite).spriteFrame = this.spriteFrame; 
-        // this.schedule(this._updateFrame, 1 / 60);  // 60FPS 更新 
-    }
+    // _initVideo () {
+    //     this.videoDOM = this.videoNode.getComponent("VideoPlayerEx").VideoPlayer.nativeVideo; 
+    //     this.canvas = document.createElement("canvas"); 
+    //     this.ctx = this.canvas.getContext("2d", { willReadFrequently: true }); 
+    //     this.canvas.width = 428;  // 設定解析度 
+    //     this.canvas.height = 240; 
+    //     this.texture = new Texture2D(); 
+    //     this.spriteFrame = new SpriteFrame(); 
+    //     this.spriteFrame.texture = this.texture;
+    //     this.spriteNode.getComponent(Sprite).spriteFrame = this.spriteFrame; 
+    //     this.schedule(this._updateFrame, 1 / 60);  // 60FPS 更新 
+    // }
 
+    // _updateFrame () {
+    //     if (this.videoDOM.readyState >= 2) { // 確保影片有足夠幀可讀取 
+    //         this.ctx.drawImage(this.videoDOM, 0, 0, this.canvas.width, this.canvas.height); 
+    //         let imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height); 
+    //         // this.texture.initWithData(imageData.data, Texture2D.PixelFormat.RGBA8888, this.canvas.width, this.canvas.height); 
+    //         const imageAsset = new ImageAsset({
+    //             _data: imageData.data,
+    //             _compressed: false,
+    //             width: this.canvas.width,
+    //             height: this.canvas.height,
+    //             format: Texture2D.PixelFormat.RGBA8888,
+    //         });
+    //         this.texture.image = imageAsset;
+    //         this.spriteFrame.texture = this.texture; 
+    //         this.spriteNode.getComponent(Sprite).spriteFrame = this.spriteFrame;
+    //     } 
+    // }
+
+    _initVideo () {
+        this.videoDOM = this.videoNode.getComponent("VideoPlayerEx").VideoPlayer.nativeVideo;
+        
+        this.canvas = document.createElement('canvas');
+        this.canvas.style.width = 350;
+        document.body.appendChild(this.canvas);
+        this.canvas.width = 428;
+        this.canvas.height = 240;
+        this.ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+
+        this.imageAsset = new ImageAsset(this.canvas);
+        log(this.imageAsset);
+
+        this.texture = new Texture2D();
+        this.texture.image = this.imageAsset;
+
+        this.spriteFrame = new SpriteFrame();
+        this.spriteFrame.texture = this.texture;
+        // this.spriteFrame = SpriteFrame.createWithImage(this.imageAsset)
+
+        this.spriteNode.getComponent(Sprite).spriteFrame = this.spriteFrame;
+
+        this.schedule(this._updateFrame, 1 / 30); // 用 30 FPS 測試即可
+    }
+    
     _updateFrame () {
-        // if (this.videoDOM.readyState >= 2) { // 確保影片有足夠幀可讀取 
-            // this.ctx.drawImage(this.videoDOM, 0, 0, this.canvas.width, this.canvas.height); 
-            // let imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height); 
-            // this.texture.initWithData(imageData.data, cc.Texture2D.PixelFormat.RGBA8888, this.canvas.width, this.canvas.height); 
-            // this.spriteFrame.setTexture(this.texture); 
-        // } 
+        if (this.videoDOM.readyState >= 2) {
+            this.ctx.drawImage(this.videoDOM, 0, 0, this.canvas.width, this.canvas.height);
+            this.imageAsset._nativeAsset = this.canvas;
+        }
     }
 
     setVideoSpriteGray (event: any, customEventData: any) {

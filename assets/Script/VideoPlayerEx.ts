@@ -10,7 +10,7 @@ export class VideoPlayerEx extends Component {
     public vidioNode = null;
 
     private hls: HlsPlayer | null = null;
-    private VideoPlayer: VideoPlayer | null = null;
+    public VideoPlayer: VideoPlayer | null = null;
     onLoad () {
         this.hls = null; 
         this.VideoPlayer = this.vidioNode.getComponent(VideoPlayer);
@@ -81,12 +81,17 @@ export class VideoPlayerEx extends Component {
         // } 
         // this.VideoPlayer._impl._video.autoplay = true; 
         // this.VideoPlayer._impl._video.muted = false; 
+        // if( !this.VideoPlayer.nativeVideo ){
+        //     this.VideoPlayer._impl.createVideoPlayer("");
+        // }
 
         this.VideoPlayer.nativeVideo.controls = true; // 顯示控制面板 
         this.VideoPlayer.nativeVideo.crossOrigin = "anonymous"; 
         this.VideoPlayer.nativeVideo.poster = options.posterURL; 
         this.VideoPlayer.nativeVideo.disablePictureInPicture = true; 
         this.VideoPlayer.nativeVideo.addEventListener("click", this._mouseHandler, false); 
+        this.VideoPlayer.nativeVideo.muted = true;
+        // this.VideoPlayer.nativeVideo.preload = "none";
         if (this.VideoPlayer.nativeVideo.canPlayType("application/vnd.apple.mpegurl")) { 
             this.VideoPlayer.nativeVideo.src = options.videoURLs.origin; 
         } else { 
@@ -99,15 +104,14 @@ export class VideoPlayerEx extends Component {
             }); 
         } 
         this.VideoPlayer.nativeVideo.autoplay = true; 
-        this.VideoPlayer.nativeVideo.muted = false; 
     }
 
-    _createDOM (tagName: any, className: any, id: any, parentNode: any) {
-        // const DOM = document.createElement(tagName); 
-        // DOM.classList.add(className); 
-        // DOM.id = id; 
-        // parentNode.appendChild(DOM); 
-        // return DOM; 
+    _createDOM (tagName: string, className: string, id: any, parentNode: any) {
+        const DOM = document.createElement(tagName); 
+        DOM.classList.add(className); 
+        DOM.id = id; 
+        parentNode.appendChild(DOM); 
+        return DOM; 
     }
 
     _mouseHandler (event: any) {

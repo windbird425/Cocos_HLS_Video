@@ -50,7 +50,12 @@ export class HlsPlayer {
 
             this.hls.loadSource(bestURL);
             this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                this.videoDOM.play().catch((err) => {
+                this.videoDOM.play()
+                .then(() => {
+                    // 播放成功後，CB
+                    this.videoDOM.muted = false;
+                })
+                .catch((err) => {
                     error('HLS 播放错误', err);
                 });
             });
