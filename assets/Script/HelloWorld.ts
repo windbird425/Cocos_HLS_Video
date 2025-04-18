@@ -1,10 +1,12 @@
-import { _decorator, Component, Node, log, resources, instantiate, Sprite, Texture2D, SpriteFrame, ImageAsset, Vec2 } from 'cc';
+import { _decorator, Component, Node, log, resources, instantiate, Sprite, Texture2D, SpriteFrame, ImageAsset, Vec2, Toggle, UITransform } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('HelloWorld')
 export class HelloWorld extends Component {
     @property(Node)
     public spriteNode = null;
+    @property(Toggle)
+    public filmStyleToggle = null;
 
     private videoNode: Node | null = null;
     private spriteNodeMaterial: any;
@@ -42,9 +44,11 @@ export class HelloWorld extends Component {
     }
 
     protected update(dt: number): void {
-        this.spriteNodeMaterial.setProperty('resolution', new Vec2(this.spriteNode.width, this.spriteNode.height));
-        this.spriteNodeMaterial.setProperty('time', performance.now() / 1000); // 每幀更新可用於動畫 noise
-        // this.spriteNodeMaterial.setProperty('time', dt); // 每幀更新可用於動畫 noise
+        if( this.filmStyleToggle.isChecked ){
+            this.spriteNodeMaterial.setProperty('resolution', new Vec2(this.spriteNode.getComponent(UITransform).width, this.spriteNode.getComponent(UITransform).height));
+            this.spriteNodeMaterial.setProperty('time', performance.now() / 1000); // 每幀更新可用於動畫 noise
+            // this.spriteNodeMaterial.setProperty('time', dt); // 每幀更新可用於動畫 noise
+        }
     }
 
     _initVideo () {
@@ -54,8 +58,8 @@ export class HelloWorld extends Component {
         // document.body.appendChild(this.canvas);
 
         this.ctx = this.canvas.getContext("2d", { willReadFrequently: true }); 
-        this.canvas.width = this.spriteNode.width;  // 設定解析度 
-        this.canvas.height = this.spriteNode.height; 
+        this.canvas.width = this.spriteNode.getComponent(UITransform).width;  // 設定解析度 
+        this.canvas.height = this.spriteNode.getComponent(UITransform).height; 
 
         this.texture = new Texture2D(); 
         this.texture.reset({
@@ -85,7 +89,11 @@ export class HelloWorld extends Component {
 
     setVideoSpriteGray (event: any, customEventData: any) {
         log(event.progress); 
-        this.spriteNodeMaterial.setProperty("grayEffect", event.progress);  
+        this.spriteNodeMaterial.setProperty("grayEffect", event.progress);
+    }
+
+    onToggleFilmStyle (event: any, customEventData: any) {
+        this.spriteNodeMaterial.setProperty( "enableFilmEffect", Number(event.isChecked) );
     }
 
 }
