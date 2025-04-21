@@ -1,2 +1,2 @@
-# hello-world
-Hello world new project template.
+# HLS video研究
+- 本專案在研究如何串接HLS影片以及如何在遊戲引擎上渲染影片。
