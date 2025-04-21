@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, log, resources, instantiate, Sprite, Texture2D, SpriteFrame, ImageAsset, Vec2, Toggle, UITransform } from 'cc';
+import { VideoPlayerEx } from '../Script/VideoPlayerEx';
 const { ccclass, property } = _decorator;
 
 @ccclass('HelloWorld')
@@ -52,7 +53,7 @@ export class HelloWorld extends Component {
     }
 
     _initVideo () {
-        this.videoDOM = this.videoNode.getComponent("VideoPlayerEx").VideoPlayer.nativeVideo; 
+        this.videoDOM = this.videoNode.getComponent(VideoPlayerEx).VideoPlayer.nativeVideo; 
         this.canvas = document.createElement("canvas"); 
         // this.canvas.style.width = 350;
         // document.body.appendChild(this.canvas);
